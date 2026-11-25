@@ -1,0 +1,100 @@
+{
+  "name": "@webship.co/workspace-uikit",
+  "version": "1.0.0",
+  "description": "UIkit for Webship Workspace: the builder (`cmd-uikit-project.sh`) in every sites folder, which serves the components demo site of the UIkit step pack in a container (DDEV by default, or Docker Compose, Podman or Kubernetes with --runtime), the step pack wired into the testing setup of such a site (and of any other project with the core's `--add-steps uikit`), and its AI items in their folders: two agents, a skill, a command and two prompts for testing and building UIkit UIs.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "ISC",
+  "engines": {
+    "node": ">=24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webship/workspace-uikit.git"
+  },
+  "files": [
+    "dist/src",
+    "ai",
+    "commands",
+    "features",
+    "scripts",
+    "testing",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "workspacePlugin": {
+    "name": "uikit",
+    "label": "UIkit",
+    "needs": [
+      [
+        "dev",
+        "test",
+        "sandboxes",
+        "demos"
+      ],
+      "ai-agents",
+      "ai-skills",
+      "ai-commands",
+      "ai-prompts"
+    ],
+    "commands": {
+      "types": [
+        "sites"
+      ],
+      "workspaces": [
+        "dev",
+        "test",
+        "sandboxes",
+        "demos"
+      ],
+      "files": [
+        "commands/cmd-uikit-project.sh"
+      ]
+    },
+    "scripts": {
+      "functions": [
+        "scripts/functions/fun-uikit.sh"
+      ],
+      "args": [
+        "scripts/args/arg-uikit.sh"
+      ],
+      "machine": [
+        "testing/site.feature"
+      ]
+    },
+    "ai": {
+      "agents": [
+        "ai/agents/uikit-ui-builder.md",
+        "ai/agents/uikit-tester.md"
+      ],
+      "skills": [
+        "ai/skills/uikit-scenarios"
+      ],
+      "commands": [
+        "ai/commands/uikit-test.md"
+      ],
+      "prompts": [
+        "ai/prompts/uikit-build-and-test.md",
+        "ai/prompts/uikit-scenarios-for-a-site.md"
+      ]
+    },
+    "features": [
+      "features/uikit.feature",
+      "features/uikit-runtimes.feature"
+    ],
+    "featuresSite": "cmd-uikit-project.sh ci-uikit --install --runtime docker"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@webship.co/workspace-plugin-api": "^1.0.11",
+    "typescript": "^5.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
