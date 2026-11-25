@@ -11,7 +11,7 @@ The components are not a platform: any site may use them, whatever its CMS. So t
 with every component on it, and the step pack goes into any other project with the core's own command:
 `bash cmd-tools-testing.sh <project> --add-steps uikit`, beside the platform's pack of a Drupal site
 with the theme UI Suite UIkit, or of a WordPress or Joomla site whose theme is built on the components
-(with a Webship Workspace that lists the pack among its step packs, after 1.0.34).
+(Webship Workspace 1.0.35 or newer, which lists the pack among its step packs).
 
 The workspace is container-based (DDEV by default): a demo site is a row like any other, so the row
 menus the core draws (start, stop, launch, backup, clone, remove, tests) work on it; what does not
@@ -137,8 +137,8 @@ The testing setup adds `@webship-js/uikit-steps` to the project, lists its step 
 accordion, a menu, the navigation bar on a narrow screen). It changes nothing in a project that is
 not a demo site.
 
-On any other site whose theme is built on the components (with a Webship Workspace that lists the
-pack among its step packs, after 1.0.34):
+On any other site whose theme is built on the components (Webship Workspace 1.0.35 or newer, which
+lists the pack among its step packs):
 
 ```bash
 bash cmd-tools-testing.sh mysite                      # webship-js and the platform's own pack
@@ -155,15 +155,15 @@ pages in with htmx (UI Suite UIkit does) needs nothing more: the steps wait for 
 The commands are the same on every runtime: the builder speaks DDEV's verbs, and on another runtime
 the core's layer (Webship Workspace 1.0.32 or later, webship/workspace#694) gives each verb its meaning
 there. The demo site gets the core's php stack, Apache serving `site/`, with no database service. On
-Kubernetes that needs the core's fix webship/workspace#884: before it, a project without a database
-waited for one there (webship/workspace#883).
+Kubernetes that needs core 1.0.35 or newer (webship/workspace#884): before it, a project without a
+database waited for one there (webship/workspace#883).
 
 | Runtime | The address of the site | Proven with this builder |
 | --- | --- | --- |
 | DDEV (the default) | `https://<name>.ddev.site` | Built in 23 s, the pages answer |
 | Docker Compose (`--runtime docker`) | `http://127.0.0.1:<port>`, a free port kept in `compose.yaml` | Built in 4 s (the stack's image already built), the pages answer; the testing setup and a run: the first feature (5 scenarios) and, with the skill's three examples, 20 scenarios and 98 steps; the plugin's features on the dashboard |
 | Podman (`--runtime podman`) | `http://127.0.0.1:<port>` | Built in 85 s with the stack's image, the pages answer, the files are the host user's; the plugin's features on the dashboard |
-| Kubernetes (`--runtime kubernetes`) | `http://<node address>:<NodePort>` | On kind (Kubernetes 1.37.0) with webship/workspace#884: built in 13 s, the pages answer; the plugin's features on the dashboard |
+| Kubernetes (`--runtime kubernetes`) | `http://<node address>:<NodePort>` | On kind (Kubernetes 1.37.0) with core 1.0.35 or newer (webship/workspace#884): built in 13 s, the pages answer; the plugin's features on the dashboard |
 
 A project of the builder is known by DDEV's file on DDEV and by its claim on another runtime, so the
 testing setup, the Users tools (which say there are no accounts) and the dashboard's row work the same
